@@ -14,7 +14,8 @@ userRoute.post("/register", registrationValidator, runValidation,
 //for account activation
 userRoute.post("/account-activation", activateAccount)
 //for login 
-userRoute.post("/login", loginUser)
+userRoute.post("/login",loginValidator,runValidation, loginUser)
+
 //for the forget password for sending the email for rsert lik
 userRoute.post("/forget-password", forgetPassword)
 //for reset the passowrd for updating te password

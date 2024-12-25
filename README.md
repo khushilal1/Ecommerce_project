@@ -55,7 +55,10 @@
 --admin dashboard
 --user dashboard
 --product api
+---Create,Read,Update,Delete
 --category api
+---Create,Read,Update,Delete
+
 --payments
 --deploy
 

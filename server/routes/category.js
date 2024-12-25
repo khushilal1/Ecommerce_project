@@ -7,7 +7,7 @@ const { categoryValidator } = require('../validation/category');
 
 
 //for the protected route as only the admin ca acess some route
-categoryRoute.post("/categories", createCategory)
+categoryRoute.post("/categories", categoryValidator,runValidation, isLoggedIn, isAdmin, createCategory)
 
 // for the getting the  all category
 categoryRoute.get("/categories/", getAllCategories)
@@ -18,10 +18,10 @@ categoryRoute.get("/categories/:slug", getSingleCategory);
 
 //for the updating the category
 
-categoryRoute.put("/categories/:categoryId",updateCategory)
+categoryRoute.put("/categories/:categoryId", categoryValidator,runValidation, isLoggedIn, isAdmin, updateCategory)
 
 //for the deleting the category
-categoryRoute.delete("/categories/:categoryId", deleteCategory)
+categoryRoute.delete("/categories/:categoryId", isLoggedIn, isAdmin, deleteCategory)
 
 
 

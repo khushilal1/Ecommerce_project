@@ -117,7 +117,7 @@ const loginUser = async (req, res) => {
         //checking the data in database
         console.log((req.body));
         //checking the data
-        
+
         const existingUser = await User.findOne({ email: email })
         if (!existingUser) {
             return res.status(404).json({ message: "User with the email is not found" })
@@ -129,7 +129,7 @@ const loginUser = async (req, res) => {
             return res.status(400).json({ message: "Email/Password did not match" })
         }
         //creating the token with user id only
-        const token = jwt.sign({ _id: existingUser._id }, dev.secretKey.jwtSecretKey, { expiresIn: "2h" })
+        const token = jwt.sign({ _id: existingUser._id }, dev.secretKey.jwtSecretKey, { expiresIn: "10h" })
 
 
 
@@ -140,6 +140,7 @@ const loginUser = async (req, res) => {
             maxAge: 60 * 60 * 1000 // Cookie expires in 10 minutes
         });
 
+        
         //sending the data to the frontend
         return res.status(200).json({
             message: "User was signed",
@@ -251,6 +252,7 @@ const loadProtected = async (req, res) => {
     try {
         console.log("load protected");
         console.log(req.userId);
+        res.send({ message: "Protected route working fine" })
 
 
 

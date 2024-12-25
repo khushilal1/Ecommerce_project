@@ -32,7 +32,52 @@ const createCategory = async (req, res) => {
 }
 
 
+//getting all category
 
+const getAllCategories = async (req, res) => {
+
+    try {
+
+        const allCategories = await Category.find()
+        if (!allCategories) {
+            return res.status(400).jso({ error: "The categories not found" })
+        }
+        return res.status(200).json({ message: "Categories was returned", allCategries: allCategories })
+    }
+    catch (error) {
+        res.status(500).send({ message: error.message })
+    }
+
+
+}
+
+
+//for getting the single categories
+
+const getSingleCategory = async (req, res) => {
+
+    try {
+        //gettign the value from thw params as query parmater
+        const { slug } = req.params
+        console.log(slug);
+
+        const singleCategory = await Category.findOne({ slug: slug })
+        if (!singleCategory) {
+            return res.status(400).json({ error: "Category  not exist with slug" })
+        }
+
+
+        return res.status(200).json({ message: "single category was return", singleCategory: singleCategory })
+
+
+
+    }
+    catch (error) {
+        res.status(500).send({ message: error.message })
+    }
+
+
+}
 // updating the category
 const updateCategory = async (req, res) => {
 
@@ -69,51 +114,6 @@ console.log(req.params);
 
 }
 
-//for getting the all categories
-
-const getSingleCategory = async (req, res) => {
-
-    try {
-        //gettign the value from thw params as query parmater
-        const { slug } = req.params
-        console.log(slug);
-
-        const singleCategory = await Category.findOne({ slug: slug })
-        if (!singleCategory) {
-            return res.status(400).json({ error: "Category  not exist with slug" })
-        }
-
-
-        return res.status(200).json({ message: "single category was return", singleCategory: singleCategory })
-
-
-
-    }
-    catch (error) {
-        res.status(500).send({ message: error.message })
-    }
-
-
-}
-
-//getting all category
-
-const getAllCategories = async (req, res) => {
-
-    try {
-
-        const allCategories = await Category.find()
-        if (!allCategories) {
-            return res.status(400).jso({ error: "The categories not found" })
-        }
-        return res.status(200).json({ message: "Categories was returned", allCategries: allCategories })
-    }
-    catch (error) {
-        res.status(500).send({ message: error.message })
-    }
-
-
-}
 //for delete the categpry
 const deleteCategory = async (req, res) => {
 
