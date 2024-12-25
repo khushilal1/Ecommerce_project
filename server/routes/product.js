@@ -11,11 +11,11 @@ productRoute.post("/products", isLoggedIn, isAdmin, formidableMiddleware(), crea
 
 
 
-//getting all the product if the user is admin and loggedIn
-productRoute.get("/products", formidableMiddleware(), getProducts)
+//getting all the product need not be admin and loged in
+productRoute.get("/products",isLoggedIn, formidableMiddleware(), getProducts)
 
 //getting the single product if the user is admin and loggedIn
-productRoute.get("/products/:slug", formidableMiddleware(), getSingleProducts)
+productRoute.get("/products/:slug",isLoggedIn, formidableMiddleware(), getSingleProducts)
 //for gettig the photto
 productRoute.get("/products/photo/:productId", formidableMiddleware(), getPhotoProduct)
 //for deleting the product as is loggedin and isAdmin is required

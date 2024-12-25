@@ -32,7 +32,7 @@ const createProduct = async (req, res) => {
 
         //creating the product ans storing in the database with photo
         if (photo) {
-            //stpring the data of phot as buffer
+            //stpring the data of photo as buffer
             newProduct.photo.data = fs.readFileSync(photo.path)
             //stromg the extension as photp content type
             newProduct.photo.contentType = photo.type
@@ -46,7 +46,7 @@ const createProduct = async (req, res) => {
     }
 
     catch (error) {
-        res.status(500).send({ message: error.message })
+        res.status(500).send({ message: error.message})
     }
 
 
@@ -57,8 +57,8 @@ const createProduct = async (req, res) => {
 const getProducts = async (req, res) => {
 
     try {//select the field as required
-        const allProducts = await Product.find().populate("category")
-        console.log(allProducts);
+        const allProducts = await Product.find().limit(1)
+        // console.log(allProducts);
 
 
         return res.status(201).json({ message: "All  the product was returned", allProducts: allProducts })
@@ -74,13 +74,13 @@ const getProducts = async (req, res) => {
 const getSingleProducts = async (req, res) => {
 
     try {
-        const { slug } = req.query
+        const { slug } = req.params
         console.log(slug);
 
-        const singleProduct = await Product.findOne({ slug: slug }
+        const singleProduct = await Product.findOne({ slug: slug })
 
-        )
-        console.log(singleProduct);
+        // )
+        // console.log(singleProduct);
 
 
         return res.status(200).json({ message: "Single product was returned", singleProduct: singleProduct })
@@ -92,7 +92,8 @@ const getSingleProducts = async (req, res) => {
 
 }
 
-//get photo
+//get photo of the availabe product
+
 const getPhotoProduct = async (req, res) => {
 
     try {
