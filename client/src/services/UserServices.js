@@ -8,7 +8,7 @@ export const registerUser=async(user)=>{
     return response.data
 }
 
-export const registerActivation=async(data)=>{
+export const accountActivation=async(data)=>{
     const response=await axios.post(`${baseURL}/account-activation`,data)
     return response.data
 }
