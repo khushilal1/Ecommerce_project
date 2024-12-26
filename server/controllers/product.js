@@ -46,7 +46,7 @@ const createProduct = async (req, res) => {
     }
 
     catch (error) {
-        res.status(500).send({ message: error.message})
+        res.status(500).send({ message: error.message })
     }
 
 
@@ -56,9 +56,19 @@ const createProduct = async (req, res) => {
 
 const getProducts = async (req, res) => {
 
-    try {//select the field as required
-        const allProducts = await Product.find().limit(1)
-        // console.log(allProducts);
+
+    try {
+        // const { page = 1, limit = 1 } = req.query
+        // // for the paginations
+        // // console.log(page,limit)
+        // //for the skip of teh page
+        // const skip = (page - 1) * limit
+
+        //select the field as required
+        // const allProducts = await Product.find().select("-photo").limit(4).sort({createdAt:1})  //1 for  ascneding order or older first
+        // const allProducts = await Product.find().select("-photo").limit(4).sort({ createdAt: -1 })  //-1 for  descending  order or newest first
+        const allProducts = await Product.find().select("-photo")
+
 
 
         return res.status(201).json({ message: "All  the product was returned", allProducts: allProducts })
@@ -70,6 +80,37 @@ const getProducts = async (req, res) => {
 
 
 }
+
+
+const getProductsSpecific = async (req, res) => {
+
+
+    try {
+        const { page = 1, limit = 2 } = req.query
+        // for the paginations
+        // console.log(page,limit)
+        //for the skip of teh page
+        const skip = (page - 1) * limit
+
+        // select the field as required
+        // const allProducts = await Product.find().select("-photo").limit(4).sort({createdAt:1})  //1 for  ascneding order or older first
+        // const allProducts = await Product.find().select("-photo").limit(4).sort({ createdAt: -1 })  //-1 for  descending  order or newest first
+        const allProducts = await Product.find().select("-photo").skip(skip).limit(limit).sort({ createdAt: -1 })  //-1 aldo for the pagination
+        console.log(allProducts);
+
+
+
+        return res.status(201).json({ message: "All  the product was returned", allProducts: allProducts })
+
+    }
+    catch (error) {
+        res.status(500).send({ message: error.message })
+    }
+
+
+}
+
+
 //getting the single product on the basis of slug of product
 const getSingleProducts = async (req, res) => {
 
@@ -99,11 +140,13 @@ const getPhotoProduct = async (req, res) => {
     try {
         //    const {_id}=req.query
         const { productId } = req.params
-        //    console.log(productId);
+        console.log(productId);
 
         //finding the photo of product
         const productData = await Product.findById({ _id: productId }).select("photo")
+        console.log(productData)
         if (productData.photo.data) {
+
             res.set("content-Type", productData.photo.contentType);
             return res.send(productData.photo.data)
         }
@@ -128,8 +171,8 @@ const deleteProduct = async (req, res) => {
         //for getting  the id ansd delete the product 
         const { productId } = req.params
         // console.log(productId);
-        const deletedProduct = await Product.findByIdAndDelete({ _id: productId })
-        return res.status(200).json({ message: "Single product was deleted", deletedProduct: deletedProduct })
+        const deletedProduct = await Product.findByIdAndDelete({ _id: productId }).select("-photo")
+        return res.status(200).json({ message: "The product was deleted", deletedProduct: deletedProduct })
     }
     catch (error) {
         res.status(500).send({ message: error.message })
@@ -138,7 +181,6 @@ const deleteProduct = async (req, res) => {
 
 }
 //updating the product
-
 const updateProduct = async (req, res) => {
 
     try {
@@ -150,7 +192,7 @@ const updateProduct = async (req, res) => {
         //using the new package fomridable-express 
         const { name, description, price, quantity, shipping, category } = req.fields
 
-
+        // console.log(req.files)
         if (!name && !description && !price && !quantity && !category) {
             return res.status(404).json({ message: "name,description,price,quantity and category  of any product  are  required" })
         }
@@ -160,12 +202,12 @@ const updateProduct = async (req, res) => {
             return res.status(400).json({ message: "The size of photo cannot be more than 2 MB" })
 
         }
-        // //update the product
+        // // //update the product
         const updatedProduct = await Product.findByIdAndUpdate({ _id: productId }, {
             name, slug: slugify(name), description, price, quantity, category, shipping
         }, { new: true })
 
-        console.log(updatedProduct);
+        // console.log(updatedProduct);
 
         //creating the product ans storing in the database with photo
         if (photo) {
@@ -193,6 +235,37 @@ const updateProduct = async (req, res) => {
 
 
 
+const countProduct = async (req, res) => {
+    try {//select the field as required
+        const numberCountProduct = await Product.find().countDocuments()
+
+        console.log(numberCountProduct)
+
+        return res.status(200).json({ message: "Number of Product was returned", numberCountProduct: numberCountProduct })
+
+    }
+    catch (error) {
+        res.status(500).send({ message: error.message })
+    }
+
+
+
+}
+
+//for searching of the products
+
+const searchProduct = async (req, res) => {
+
+    try {
+        console.log("search product")
+
+    }
+    catch (error) {
+        res.status(500).send({ message: error.message })
+    }
+
+
+}
 
 //exporting the module
-module.exports = { createProduct, getProducts, getSingleProducts, getPhotoProduct, deleteProduct, updateProduct }
+module.exports = { createProduct, getProducts, getSingleProducts, getPhotoProduct, deleteProduct, updateProduct, countProduct, getProductsSpecific, searchProduct }

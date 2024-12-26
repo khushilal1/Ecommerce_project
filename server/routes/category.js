@@ -24,7 +24,7 @@ categoryRoute.put("/categories/:categoryId", categoryValidator,runValidation, is
 categoryRoute.delete("/categories/:categoryId", isLoggedIn, isAdmin, deleteCategory)
 
 
-
+ 
 
 
 
