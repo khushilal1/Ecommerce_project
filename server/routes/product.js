@@ -1,6 +1,6 @@
 const express = require('express');
 const { isLoggedIn, isAdmin } = require('../middlewares/user');
-const { createProduct, getProducts, getSingleProducts, getPhotoProduct, deleteProduct, updateProduct,countProduct ,getProductsSpecific,searchProduct} = require('../controllers/product');
+const { createProduct, getProducts, getSingleProducts, getPhotoProduct, deleteProduct, updateProduct,countProduct ,getProductsSpecific,searchProducts} = require('../controllers/product');
 const productRoute = express.Router()
 const formidableMiddleware = require("express-formidable")
 
@@ -36,9 +36,9 @@ productRoute.get("/products-count", countProduct)
 
 
 //for having the product search
-productRoute.post("/products/search", isLoggedIn,searchProduct)
+productRoute.post("/products/search/:searchValue", isLoggedIn,searchProducts)
 
-
+//
 
 
 
