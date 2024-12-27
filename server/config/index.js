@@ -18,7 +18,12 @@ const dev = {
     secretKey: {
         jwtSecretKey: String(process.env.JWT_SECRET_KEY)
     },
+    paymentKey: {
+        braintreeMerchantId: String(process.env.BRAINTREE_MERCHANT_ID),
+        braintreePrivateKey: String(process.env.BRAINTREE_PRIVATE_KEY),
+        braintreePublicKey: String(process.env.BRAINTREE_PUBLIC_KEY)
+    }
 
 }
 
-module.exports = {dev} 
+module.exports = { dev } 

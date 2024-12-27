@@ -1,6 +1,6 @@
 const express = require('express');
 const { isLoggedIn, isAdmin } = require('../middlewares/user');
-const { createProduct, getProducts, getSingleProducts, getPhotoProduct, deleteProduct, updateProduct,countProduct ,getProductsSpecific,searchProducts} = require('../controllers/product');
+const { createProduct, getProducts, getSingleProducts, getPhotoProduct, deleteProduct, updateProduct, countProduct, getProductsSpecific, searchProducts, getBrainTreeToken ,processBraintreePayment} = require('../controllers/product');
 const productRoute = express.Router()
 const formidableMiddleware = require("express-formidable")
 
@@ -36,12 +36,15 @@ productRoute.get("/products-count", countProduct)
 
 
 //for having the product search
-productRoute.post("/products/search/:searchValue", isLoggedIn,searchProducts)
+productRoute.post("/products/search/:searchValue", isLoggedIn, searchProducts)
 
-//
+//payment route
+//this is route which doesnot required any middle ware for showing the deatil or creating the token
+productRoute.get("/braintree/token", getBrainTreeToken)
 
 
-
+//for processing the token
+productRoute.post("/braintree/payment",isLoggedIn, processBraintreePayment)
 
 
 

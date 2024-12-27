@@ -36,7 +36,7 @@ userRoute.get("/adminCheck", isLoggedIn, isAdmin, (req, res) => {
 //for the protected route as only the admin ca acess some route
 userRoute.post("/protected", isLoggedIn, isAdmin, loadProtected)
 
-
+////////for the 
 
 
 module.exports = { userRoute }

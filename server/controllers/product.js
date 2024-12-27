@@ -1,6 +1,20 @@
 const { Product } = require("../models/product");
 const fs = require("fs")
 const slugify = require("slugify")
+const braintree = require("braintree");
+const { dev } = require("../config");
+
+//initlaization of the payment integration
+
+var gateway = new braintree.BraintreeGateway({
+    environment: braintree.Environment.Sandbox,
+    merchantId: dev.paymentKey.braintreeMerchantId,
+    publicKey: dev.paymentKey.braintreePublicKey,
+    privateKey: dev.paymentKey.braintreePrivateKey,
+});
+
+
+
 //creating the new product
 const createProduct = async (req, res) => {
 
@@ -265,7 +279,7 @@ const searchProducts = async (req, res) => {
         const searchedProducts = await Product.find({
             $or: [
                 { name: { $regex: searchValue, $options: "i" } }, // i for case sensitive 
-                { description: { $regex: searchValue, $options: "i" } } ,// i for case sensitive 
+                { description: { $regex: searchValue, $options: "i" } },// i for case sensitive 
                 { slug: { $regex: searchValue, $options: "i" } } // i for case sensitive 
             ]
         }).select("-photo")
@@ -284,5 +298,69 @@ const searchProducts = async (req, res) => {
 
 
 
+//for creating token for the payment integration
+
+const getBrainTreeToken = async (req, res) => {
+
+    try {
+
+        // console.log(gateway)
+        const braintreeToken = await gateway.clientToken.generate({})
+        //priting the token
+        console.log(braintreeToken)
+        //checking the  tokne is generated or not
+        if (!braintreeToken) {
+            return res.send({ message: "token not generated" })
+        }
+
+
+
+        return res.send({ braintreeToken: braintreeToken })
+
+    }
+    catch (error) {
+        res.status(500).send({ message: error.message })
+    }
+
+
+}
+
+
+//for processing of the payment
+
+const processBraintreePayment = async (req, res) => {
+
+    try {
+        const { payment_method_nonce, amount } = req.body
+        console.log(req.body)
+
+        const result = await gateway.transaction.sale({
+            amount: amount,
+            paymentMethodNonce: payment_method_nonce,
+            options: {
+                submitForSettlement: true
+            }
+        })
+        //checking the transaction is successfull or not
+        if (!result) {
+            return res.status(401), send({ message: 'Transaction unsuccessfull' })
+        }
+
+        else {
+            return res.status(200).send({ message: "Transaction is Sucessfull" })
+
+        }
+
+
+    }
+    catch (error) {
+        res.status(500).send({ message: error.message })
+    }
+
+
+}
+
+
+
 //exporting the module
-module.exports = { createProduct, getProducts, getSingleProducts, getPhotoProduct, deleteProduct, updateProduct, countProduct, getProductsSpecific, searchProducts }
+module.exports = { createProduct, getProducts, getSingleProducts, getPhotoProduct, deleteProduct, updateProduct, countProduct, getProductsSpecific, searchProducts, getBrainTreeToken, processBraintreePayment }

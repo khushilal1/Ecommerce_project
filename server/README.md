@@ -180,15 +180,29 @@ The server will start on the URL: `http://localhost:3003`
   Headers: { Authorization: <your-token> }
   ```
 - **search the products on the basis of their name or description or slug name** (POST)
+
   ```
   URL: http://localhost:3003/api/products/search/rice cooker
   Headers: { Authorization: <your-token> }
   ```
 
+- **Payment Integration creating the token and send to the frontend** (GET)
 
+  ```
+  URL: http://localhost:3003/api/braintree/token
+  Headers: { Authorization: <your-token> }
+  ```
 
+- **Payment Integration for processing the payment** (POST)
+  ```
+  URL: http://localhost:3003/api/braintree/payment
+  Headers: { Authorization: <your-token> }
+  ```
 
-
+Order management
+-backend: when the payment is successfull processed
+----create an order Schema and Model
+----store the order in the database
 
 
 
@@ -224,6 +238,5 @@ The server will start on the URL: `http://localhost:3003`
    - **Product API**
      - Create, Read, Update, Delete
 
-5. **Payments**
 
 6. **Deploy**
