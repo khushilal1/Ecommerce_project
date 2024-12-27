@@ -20,7 +20,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 //for getting the user
 app.use(cors({
-    origin: ["http://localhost:3000","http:// 127.0.0.1:3000"], //both are the same as one is ip addresss and other are the local host
+    origin:"*", //both are the same as one is ip addresss and other are the local host
     credentials: true
 }))
 

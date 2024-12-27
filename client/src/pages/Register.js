@@ -31,13 +31,14 @@ export const Register = () => {
     }
 
     try {
+      console.log(user)
       const response = await registerUser(user); // Pass user data to the service
       toast.success(response.message || 'Registration successful');
       setUser({
-        name: 'kh',
-        email: '0bjj',
-        password: '1234',
-        address: 'jks',
+        name: '',
+        email: '',
+        password: '',
+        address: '',
       });
     } catch (error) {
       toast.error(error.response?.data?.error || 'An unexpected error occurred');

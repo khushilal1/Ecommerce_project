@@ -153,14 +153,12 @@ The server will start on the URL: `http://localhost:3003`
   ```
 
 - **Get specific number of product as pagination** (GET)
+
   ```
   URL: http://localhost:3003/api/products/query
   Headers: { Authorization: <your-token> }
   Params:{page,limit}
   ```
-
-
-
 
 - **Get Product Photo** (GET)
 
@@ -181,6 +179,20 @@ The server will start on the URL: `http://localhost:3003`
   URL: http://localhost:3003/api/products-count
   Headers: { Authorization: <your-token> }
   ```
+- **search the products on the basis of their name or description or slug name** (POST)
+  ```
+  URL: http://localhost:3003/api/products/search/rice cooker
+  Headers: { Authorization: <your-token> }
+  ```
+
+
+
+
+
+
+
+
+
 
 ## Frontend
 

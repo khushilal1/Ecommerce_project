@@ -254,10 +254,24 @@ const countProduct = async (req, res) => {
 
 //for searching of the products
 
-const searchProduct = async (req, res) => {
+const searchProducts = async (req, res) => {
 
     try {
-        console.log("search product")
+        //getting the value from params 
+        const { searchValue } = req.params
+        //searching the product the 
+        console.log(searchValue)
+        //for searching the product
+        const searchedProducts = await Product.find({
+            $or: [
+                { name: { $regex: searchValue, $options: "i" } }, // i for case sensitive 
+                { description: { $regex: searchValue, $options: "i" } } ,// i for case sensitive 
+                { slug: { $regex: searchValue, $options: "i" } } // i for case sensitive 
+            ]
+        }).select("-photo")
+
+        return res.status(200).send({ message: "Searched Product was returned", searchedProducts: searchedProducts })
+
 
     }
     catch (error) {
@@ -267,5 +281,8 @@ const searchProduct = async (req, res) => {
 
 }
 
+
+
+
 //exporting the module
-module.exports = { createProduct, getProducts, getSingleProducts, getPhotoProduct, deleteProduct, updateProduct, countProduct, getProductsSpecific, searchProduct }
+module.exports = { createProduct, getProducts, getSingleProducts, getPhotoProduct, deleteProduct, updateProduct, countProduct, getProductsSpecific, searchProducts }
