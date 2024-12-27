@@ -34,11 +34,11 @@ const userRegister = async (req, res) => {
         // // console.log(hashPassword);
 
 
-        // //if the user is activate the you want to store in databases
-        // //getting teh token for activating the user
-        // const token = await getJsonToken(name, email, hashPassword, address)
+        //if the user is activate the you want to store in databases
+        //getting teh token for activating the user
+        const token = await getJsonToken(name, email, hashPassword, address)
         // console.log(token);
-        // // send email, and prepare the email
+        // send email, and prepare the email
 
         // // // mail data for activating the account
         // const emailData = {

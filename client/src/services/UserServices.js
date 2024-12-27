@@ -10,10 +10,17 @@ export const registerUser = async (user) => {
     return response.data
 }
 
+<<<<<<< HEAD
 // export const registerActivation=async(data)=>{
 //     const response=await axios.post(`${baseURL}/account-activation`,data)
 //     return response.data
 // }
+=======
+export const accountActivation=async(data)=>{
+    const response=await axios.post(`${baseURL}/account-activation`,data)
+    return response.data
+}
+>>>>>>> e50bb9d2e0ff1130b520dcedf404040980e4911d
 
 // export const loginUser=async(user)=>{
 //     const response=await axios.post(`${baseURL}/login`,user)
