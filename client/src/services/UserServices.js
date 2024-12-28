@@ -1,5 +1,5 @@
 import axios from "axios"
-require("dotenv").config()
+axios.defaults.withCredentials=true
 
 const baseURL = process.env.REACT_APP_API
 console.log(baseURL)
@@ -10,45 +10,38 @@ export const registerUser = async (user) => {
     return response.data
 }
 
-<<<<<<< HEAD
-// export const registerActivation=async(data)=>{
-//     const response=await axios.post(`${baseURL}/account-activation`,data)
-//     return response.data
-// }
-=======
 export const accountActivation=async(data)=>{
     const response=await axios.post(`${baseURL}/account-activation`,data)
     return response.data
 }
->>>>>>> e50bb9d2e0ff1130b520dcedf404040980e4911d
 
-// export const loginUser=async(user)=>{
-//     const response=await axios.post(`${baseURL}/login`,user)
-//     return response.data
-// }
+export const loginUser=async(user)=>{
+    const response=await axios.post(`${baseURL}/login`,user)
+    return response.data
+}
 
-// export const userProfile=async()=>{
-//     const response=await axios.get(`${baseURL}/profile`,{
-//         withCredentials:true
-//     })
-//     return response.data
-// }
+export const userProfile=async()=>{
+    const response=await axios.get(`${baseURL}/profile`,{
+        withCredentials:true
+    })
+    return response.data
+}
 
-// export const authorizeUser=async (token)=>{
-//     const response=await axios.get(
-//         `${baseURL}/auth-check`,
-//         {
-//             headers:{
-//                 Authorization:token
-//             }
-//         }
-//     )
-//     return response
-// }
+export const authorizeUser=async (token)=>{
+    const response=await axios.get(
+        `${baseURL}/auth-check`,
+        {
+            headers:{
+                Authorization:token
+            }
+        }
+    )
+    return response
+}
 
-// export const logoutUser=async()=>{
-//     const response=await axios.post(`${baseURL}/logout`,null,{
-//         withCredentials:true,
-//     })
-//     return response.data
-// }
+export const logoutUser=async()=>{
+    const response=await axios.post(`${baseURL}/logout`,null,{
+        withCredentials:true,
+    })
+    return response.data
+}
