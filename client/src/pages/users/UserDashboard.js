@@ -1,23 +1,21 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import loadingGif from "../../assets/ZKZg.gif"
-import AdminSidebar from '../../components/AdminSidebar'
+import UserSidebar from '../../components/UserSidebar'
 
-export const AdminDashboard = () => {
-  const adminData=useSelector((state)=>state.user.data.userData)
+export const UserDashboard = () => {
+  const userData=useSelector((state)=>state.user.data.userData)
 
-  return ( adminData ?(
+  return ( userData ?(
   <div className='container-full'>
-    <AdminSidebar adminData={adminData}/>
+    <UserSidebar userData={userData}/>
     <div className='main-content'>
       <div className='profile'>
         <div>
-          <h2>Hello, {adminData.name}</h2>
+          <h2>Hello, {userData.name}</h2>
         </div>
       </div>
-
     </div>
-
   </div>  
   ):(
       <img src={loadingGif} className='loading-gif' alt='loadinf git' />
