@@ -120,3 +120,34 @@ button:hover {
   align-self: center;
   width: 100%;
 }
+
+.profile{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.loading-gif{
+  height: 5rem;
+  width: 5rem;
+}
+
+.drop {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none; /* Hide by default */
+  position: absolute;
+  background-color: #c91818;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.drop:hover .dropdown-content {
+  display: block; /* Show on hover */
+}
