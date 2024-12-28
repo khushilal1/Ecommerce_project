@@ -31,6 +31,7 @@ export const Register = () => {
     }
 
     try {
+      console.log(user)
       const response = await registerUser(user); // Pass user data to the service
       toast.success(response.message || 'Registration successful');
       setUser({

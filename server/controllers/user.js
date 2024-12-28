@@ -17,43 +17,43 @@ const userRegister = async (req, res) => {
         console.log(req.body);
         //userData
 
-        // //cheking the use is availabel in databases or not
-        const existingUser = await User.findOne({ email: email })
-        // console.log(existingUser);
+        // // //cheking the use is availabel in databases or not
+        // const existingUser = await User.findOne({ email: email })
+        // // console.log(existingUser);
 
 
-        // )
-        // // //checking the user is existing the send the user is already is available
+        // // )
+        // // // //checking the user is existing the send the user is already is available
 
-        if (existingUser) {
-            return res.status(403).json({ message: "User with the email is already registered" })
-        }
+        // if (existingUser) {
+        //     return res.status(403).json({ message: "User with the email is already registered" })
+        // }
 
-        // //securing the password
-        const hashPassword = await getHashPassword(password)
-        // console.log(hashPassword);
+        // // //securing the password
+        // const hashPassword = await getHashPassword(password)
+        // // console.log(hashPassword);
 
 
         //if the user is activate the you want to store in databases
         //getting teh token for activating the user
         const token = await getJsonToken(name, email, hashPassword, address)
-        console.log(token);
+        // console.log(token);
         // send email, and prepare the email
 
-        // // mail data for activating the account
-        const emailData = {
-            email,
-            subject: "Account Activation Email",
+        // // // mail data for activating the account
+        // const emailData = {
+        //     email,
+        //     subject: "Account Activation Email",
 
-            html: `<p>Welcome ${name} <a href="${dev.app_port.clientUrl}/auth/activate/${token}">Activate your account</a></p> <p>Your link  will be expired within 10 minutes</p>`, // HTML body
-        };
+        //     html: `<p>Welcome ${name} <a href="${dev.app_port.clientUrl}/auth/activate/${token}">Activate your account</a></p> <p>Your link  will be expired within 10 minutes</p>`, // HTML body
+        // };
 
-        // //calling the emailVerifcation function
-        await sendActivationEmail(emailData)
-        // //for other
-        return res.status(200).json({
-            message: `Please go to your email:${email} for completing your activating your account`
-        })
+        // // //calling the emailVerifcation function
+        // await sendActivationEmail(emailData)
+        // // //for other
+        // return res.status(200).json({
+        //     message: `Please go to your email:${email} for completing your activating your account`
+        // })
 
     }
     //for catchig the error

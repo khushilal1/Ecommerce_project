@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
-const {Schema}=require("mongoose")
+const { Schema } = require("mongoose")
 // 2.create of Schema 
+//This is the product data which keep the recoed about the deatil of product
 const productSchema = new mongoose.Schema({
 
     //for name
