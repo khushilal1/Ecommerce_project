@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import loadingGif from "../assets/ZKZg.gif"
+import loadingGif from "../../assets/ZKZg.gif"
 
-export const Dashboard = () => {
+export const UserDashboard = () => {
   const {userData}=useSelector((state)=>state.user.data)
   console.log(userData)
   return ( userData ?(

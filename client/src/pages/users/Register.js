@@ -1,24 +1,20 @@
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { loginUser } from '../services/UserServices'; // Ensure the service is correctly implemented and imported
+import { registerUser } from '../../services/UserServices'; // Ensure the service is correctly implemented and imported
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { login } from '../features/userSlice';
 
-
-export const Login = () => {
-  const dispatch=useDispatch((state)=>console.log(state))
-  const navigate =useNavigate()
-  const [value, setValue] = useState({
+export const Register = () => {
+  const [user, setUser] = useState({
+    name: '',
     email: '',
     password: '',
+    address: '',
   });
 
   // Handle input changes
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setValue((prevState) => ({
+    setUser((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -28,14 +24,21 @@ export const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Optional: Validate input
+    if (user.password.length < 6) {
+      toast.error('Password must be at least 6 characters long');
+      return;
+    }
+
     try {
-      const response = await loginUser(value); // Pass user data to the service
-      const {token,user}=response
-      dispatch(login({token,user}))
-      navigate("/dashboard")
-      setValue({
+      console.log(user)
+      const response = await registerUser(user); // Pass user data to the service
+      toast.success(response.message || 'Registration successful');
+      setUser({
+        name: '',
         email: '',
         password: '',
+        address: '',
       });
     } catch (error) {
       toast.error(error.response.data.error || 'An unexpected error occurred');
@@ -44,17 +47,28 @@ export const Login = () => {
 
   return (
     <div className="container center">
-      <h1>User Login</h1>
+      <h1>User Registration</h1>
       <ToastContainer />
       <div className="card">
         <form className="registration-form" onSubmit={handleSubmit}>
+          <div className="form-control">
+            <label htmlFor="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={user.name}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
           <div className="form-control">
             <label htmlFor="email">Email:</label>
             <input
               type="email"
               id="email"
               name="email"
-              value={value.email}
+              value={user.email}
               onChange={handleInputChange}
               required
             />
@@ -65,14 +79,25 @@ export const Login = () => {
               type="password"
               id="password"
               name="password"
-              value={value.password}
+              value={user.password}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="form-control">
+            <label htmlFor="address">Address:</label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              value={user.address}
               onChange={handleInputChange}
               required
             />
           </div>
           <div className="form-control">
             <button type="submit" className="btn">
-              Login
+              Register
             </button>
           </div>
         </form>

@@ -2,9 +2,9 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import loadingGif from "../../assets/ZKZg.gif"
 
-export const Dashboard = () => {
-  const {adminData}=useSelector((state)=>state.user.data)
-  console.log(adminData)
+export const AdminDashboard = () => {
+  const adminData=useSelector((state)=>state.user.data.userData)
+
   return ( adminData ?(
     <div className='profile'>
       <h2>Admin Profile</h2>
