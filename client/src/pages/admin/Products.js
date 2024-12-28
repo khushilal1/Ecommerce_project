@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import loadingGif from "../../assets/ZKZg.gif"
 import AdminSidebar from '../../components/AdminSidebar'
 
-export const AdminDashboard = () => {
+export const Products = () => {
   const adminData=useSelector((state)=>state.user.data.userData)
 
   return ( adminData ?(
@@ -12,7 +12,7 @@ export const AdminDashboard = () => {
     <div className='main-content'>
       <div className='profile'>
         <div>
-          <h2>Hello, {adminData.name}</h2>
+          <h2>Products Page</h2>
         </div>
       </div>
 
