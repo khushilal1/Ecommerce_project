@@ -1,5 +1,5 @@
 const express = require('express');
-const { isLoggedIn, isAdmin } = require('../middlewares/user');
+const { isLoggedIn, isAdmin } = require('../middlewares/auth');
 const { createProduct, getProducts, getSingleProducts, getPhotoProduct, deleteProduct, updateProduct, countProduct, getProductsSpecific, searchProducts, getBrainTreeToken ,processBraintreePayment} = require('../controllers/product');
 const productRoute = express.Router()
 const formidableMiddleware = require("express-formidable")
@@ -44,7 +44,7 @@ productRoute.get("/braintree/token", getBrainTreeToken)
 
 
 //for processing the token
-productRoute.post("/braintree/payment",isLoggedIn, processBraintreePayment)
+productRoute.post("/braintree/payment", processBraintreePayment)
 
 
 

@@ -5,12 +5,12 @@ const userSchema = new mongoose.Schema({
 
     //for name
     name: {
-        type: String
-        ,
-        required: [true, "Name is required"],
+        type: String,
+        required: [true, "name is required"],
         trim: true,
         minLength: [3, "name must have at least 3 character"],
-        maxLength: [31, "name must have at least 100 character"]
+        maxLength: [30, "name must not exceed 30 character"],
+
     },
     //for email
     email: {
@@ -29,27 +29,28 @@ const userSchema = new mongoose.Schema({
 
 
     },
-    //for the address
+    // //for the address
     address: {
         type: String,
         trim: true
     },
 
-//for role as user or admin
+    //for role as user or admin
     role: {
         type: Number,
         deafault: 0
 
 
     },
+    //for storing the image
+    photo: {
+        data: Buffer,
+        contentType: String //jpeg,png
+
+    },
 
 
 
-    // //for image
-    // image: {
-    //     type: String,
-    //     required: [true, "image is required"]
-    // },
     //for admin
     isAdmin: {
         type: Number,
@@ -67,12 +68,12 @@ const userSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: new Date().toISOString()
+
     },
-    //for toke 
-    // token: {
-    //     type: String,
-    //     default: ""
-    // },
+    updateAt: {
+        type: Date,
+        default: new Date().toISOString()
+    },
 },
     {
         timestamp: true

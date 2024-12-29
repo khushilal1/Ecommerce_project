@@ -1,21 +1,7 @@
 const jwt = require("jsonwebtoken")
 const { dev } = require("../config/index")
 
-
-// const tokenVerify = async (token) => {
-
-//     try {
-//         return jwt.verify(token, dev.secretKey.jwtSecretKey)
-
-
-//     }
-//     catch (error) {
-//         res.status(500).send({ message: error.message })
-//     }
-
-
-// }
-
+//for the verification  of token provided at the accooutn activation time
 const tokenVerify = async (token, res) => {
     try {
         // Verify the token

@@ -1,6 +1,6 @@
 const { validationResult } = require("express-validator");
 
-//for running the express validation
+//for running the express validation for validating the user data
 const runValidation = (req, res, next) => {
     const errors = validationResult(req);
 

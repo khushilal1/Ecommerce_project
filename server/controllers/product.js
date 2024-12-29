@@ -310,12 +310,12 @@ const getBrainTreeToken = async (req, res) => {
         console.log(braintreeToken)
         //checking the  tokne is generated or not
         if (!braintreeToken) {
-            return res.send({ message: "token not generated" })
+            return res.status(401).send({ message: "token not generated" })
         }
 
 
 
-        return res.send({ braintreeToken: braintreeToken })
+        return res.status(200).send({ braintreeToken: braintreeToken })
 
     }
     catch (error) {
@@ -332,7 +332,7 @@ const processBraintreePayment = async (req, res) => {
 
     try {
         const { payment_method_nonce, amount } = req.body
-        console.log(req.body)
+        // console.log(req.body)
 
         const result = await gateway.transaction.sale({
             amount: amount,
@@ -341,6 +341,7 @@ const processBraintreePayment = async (req, res) => {
                 submitForSettlement: true
             }
         })
+        console.log(result)
         //checking the transaction is successfull or not
         if (!result) {
             return res.status(401), send({ message: 'Transaction unsuccessfull' })

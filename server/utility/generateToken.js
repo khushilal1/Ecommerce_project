@@ -6,7 +6,7 @@ const {dev} = require("../config/index")
 const getJsonToken = (name, email, hashPassword, address) => {
 
     return jwt.sign({ name: name, email: email, password: hashPassword, address: address }, dev.secretKey.jwtSecretKey, {
-        expiresIn: "100m"
+        expiresIn: "1000m"
     })
 }
 //exporting the  model

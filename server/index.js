@@ -7,6 +7,7 @@ const { userRoute } = require("./routes/user.js");
 const { categoryRoute } = require("./routes/category.js");
 const { productRoute } = require("./routes/product.js");
 const cors = require('cors');
+const { orderRoute } = require("./routes/order.js");
 
 
 const app = express();
@@ -20,15 +21,18 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 //for getting the user
 app.use(cors({
-    origin:"*", //both are the same as one is ip addresss and other are the local host
+    origin: "*", //both are the same as one is ip addresss and other are the local host
     credentials: true
 }))
-
+//for user managemnet
 app.use("/api", userRoute)
+//for category management
 app.use("/api", categoryRoute)
+//for product managemnet
 app.use("/api", productRoute)
 
-
+//for order management
+app.use("/api", orderRoute)
 
 
 

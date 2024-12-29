@@ -12,7 +12,7 @@ const isLoggedIn = (req, res, next) => {
         //verifying the token
         const token = req.headers.authorization
         const decode = jwt.verify(token, dev.secretKey.jwtSecretKey)
-        console.log(decode._id);
+        // console.log(decode._id);
         //assigning to the usr id
         req.userId = decode._id
         next()

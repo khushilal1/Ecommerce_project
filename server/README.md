@@ -11,7 +11,7 @@
 - **Register**
 - **Login**
 - **Reset Password**
-- **Forget Password**
+- **Forget Password** -**Update user profile**
 
 ### Step 3: Authentication and Authorization
 
@@ -47,13 +47,22 @@ npm start
 
 The server will start on the URL: `http://localhost:3003`
 
-#### User API
+#### User API (User Management)
 
 - **Registration** (POST)
 
   ```
+
   URL: http://localhost:3003/api/register
-  Body: { name, email, password, address }
+  Body: { name, email, password }
+  ```
+
+- **Account Activation** (POST)
+
+  ```
+
+  URL: http://localhost:3003/api/account-activation
+  Body: { name, email, password }
   ```
 
 - **Login** (POST)
@@ -76,6 +85,16 @@ The server will start on the URL: `http://localhost:3003`
   URL: http://localhost:3003/api/reset-password
   Body: { newPassword }
   ```
+
+- **Update The user profile** (PUT)
+
+  ```
+  URL: http://localhost:3003/api/update
+  //the token must be used after the login
+   Headers: { Authorization: <your-token> }
+  Body: { name,passwor,address,photo }
+  ```
+
 
 - **Protected Route** (POST)
   ```
@@ -204,10 +223,6 @@ Order management
 ----create an order Schema and Model
 ----store the order in the database
 
-
-
-
-
 ## Frontend
 
 ### Steps
@@ -238,5 +253,4 @@ Order management
    - **Product API**
      - Create, Read, Update, Delete
 
-
-6. **Deploy**
+5. **Deploy**

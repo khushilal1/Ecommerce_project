@@ -2,7 +2,7 @@ const express = require('express');
 const categoryRoute = express.Router()
 const runValidation = require('../validation/index');
 const { createCategory, getSingleCategory, getAllCategories, updateCategory, deleteCategory } = require("../controllers/category")
-const { isLoggedIn, isAdmin } = require('../middlewares/user');
+const { isLoggedIn, isAdmin } = require('../middlewares/auth');
 const { categoryValidator } = require('../validation/category');
 
 
