@@ -42,26 +42,11 @@ adminRoute.put("/update", isLoggedIn, formidableMiddleware(), updateAdmin)
 
 
 
-// userRoute.get("/loginCheck", isLoggedIn, (req, res) => {
-
-//     return res.json({ success: true })
-
-
-// })
 
 
 
 
-// //for checkign the user is admin and lpoggeed in
-// userRoute.get("/adminCheck", isLoggedIn, isAdmin, (req, res) => {
 
-
-//     return res.send({ sucess: true })
-// })
-// //for the protected route as only the admin ca acess some route
-// userRoute.post("/protected", isLoggedIn, isAdmin, loadProtected)
-
-// ////////for the 
 
 
 module.exports = { adminRoute }

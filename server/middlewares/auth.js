@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken")
 const { dev } = require("../config/index")
 const { User } = require("../models/user")
+const { Admin } = require("../models/admin")
 
 //middleware for checking 
 const isLoggedIn = (req, res, next) => {
@@ -34,23 +35,29 @@ const isLoggedIn = (req, res, next) => {
 const isAdmin = async (req, res, next) => {
 
     try {
-        const existingUser = await User.findById({ _id: req.userId })
-        console.log(existingUser);
 
-        if (!existingUser) {
-            return res.status(400).json({ error: "User Not found.Please login first" })
+
+        //getting the token from the cookies
+        const token = req.cookies.authToken;
+        //checking the token is available or not
+        if (!token) {
+            return res.status(401).json({ message: "No token provided. Access denied." });
         }
 
-        //cheking the user is admin or not
-        if (existingUser.isAdmin !== 1) {
-            return res.status(401).json({ error: "Your are not admin" })
+        //verifying the token
+        const decoded = jwt.verify(token, dev.secretKey.jwtSecretKey);
+
+        //checkig the admin or not
+        const admin = await Admin.findById(decoded._id);
+
+        if (!admin) {
+            return res.status(403).json({ message: "Access denied. Only admins can perform this action." });
         }
+        req.admin = admin; // Attach the admin to the request object
+
         next();
 
     }
-
-
-
 
     catch (error) {
         res.status(401).send({ message: error.message })
@@ -58,5 +65,7 @@ const isAdmin = async (req, res, next) => {
 
 
 }
+
+
 
 module.exports = { isLoggedIn, isAdmin }

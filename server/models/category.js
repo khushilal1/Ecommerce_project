@@ -29,7 +29,14 @@ const categorySchema = new mongoose.Schema({
         default: new Date().toISOString()
     },
 
+    //refrencing to the admin 
+    admin: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin', required: true }, // Reference to Admin
+
 },
+
+
+
+
     {
         timestamp: true
 

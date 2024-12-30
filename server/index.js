@@ -12,6 +12,7 @@ const { clientError, serverError } = require("./controllers/error.js");
 const { adminRoute } = require("./routes/admin.js");
 const app = express();
 const port = dev.app_port.serverPort
+const cookieParser = require('cookie-parser');
 
 
 //for middleware
@@ -19,6 +20,7 @@ const port = dev.app_port.serverPort
 app.use(morgan("dev")) //for cheking the api calling method
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser());
 //for getting the user
 app.use(cors({
     origin: "*", //both are the same as one is ip addresss and other are the local host
@@ -30,8 +32,6 @@ app.use("/api", userRoute)
 
 //for admin management
 app.use("/api/admin", adminRoute)
-
-
 //for category management
 app.use("/api", categoryRoute)
 //for product managemnet

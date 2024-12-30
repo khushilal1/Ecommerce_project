@@ -1,23 +1,35 @@
 const slugify = require("slugify")
 const { Category } = require("../models/category")
 
-//for creating  new category
 
+//for creating  new category
 const createCategory = async (req, res) => {
 
     try {
 
+        //getting the admin value
+        const adminId = req.admin._id
+        console.log(adminId)
+        //checking if the admin is not not
+        if (!adminId) {
+            return res.status(403).json({ message: 'You must be an admin to create categories.' });
+        }
+        console.log("category creation")
+        //getting the nane of category
         const { name } = req.body
-        //checking the product name in the database
+        //checking the categrory name in the database
         const existingCategory = await Category.findOne({ name: name })
+        //checking the categiory is already exist or not
         if (existingCategory) {
             return res.status(400).json({ error: "Category already exist with this name" })
         }
-        //saving the category
+
+        // //saving the category
 
         const newCategory = await new Category({
             name: name,
-            slug: slugify(name)
+            slug: slugify(name),
+            admin: adminId,
         })
         //savig the value
         await newCategory.save()
@@ -33,7 +45,6 @@ const createCategory = async (req, res) => {
 
 
 //getting all category
-
 const getAllCategories = async (req, res) => {
 
     try {
@@ -53,7 +64,6 @@ const getAllCategories = async (req, res) => {
 
 
 //for getting the single categories
-
 const getSingleCategory = async (req, res) => {
 
     try {
@@ -78,12 +88,15 @@ const getSingleCategory = async (req, res) => {
 
 
 }
+
+
+
 // updating the category
 const updateCategory = async (req, res) => {
 
     try {
 
-console.log(req.params);
+        console.log(req.params);
 
 
         const { categoryId } = req.params
@@ -145,4 +158,43 @@ const deleteCategory = async (req, res) => {
 
 
 
-module.exports = { createCategory, updateCategory, getSingleCategory, getAllCategories, deleteCategory }
+
+//for the searching on the basis of category name and their slug nmae 
+const searchCategory = async (req, res) => {
+
+    try {
+        //getting the value from params 
+        const { searchValue } = req.params
+        //searching the category the
+        console.log(searchValue)
+        //for searching the product
+        const searchedCategory = await Category.find({
+            $or: [
+                { name: { $regex: searchValue, $options: "i" } }, // i for case sensitive 
+                { slug: { $regex: searchValue, $options: "i" } } // i for case sensitive 
+            ]
+        })
+
+
+        //checking if the category not found
+        if (searchedCategory.length<1) {
+            return res.status(404).json({ message: "No categories found matching the search." })
+        }
+
+        //returning the value to the frontend
+        return res.status(200).send({ message: "Searched Category was returned", searchedCategory: searchedCategory })
+
+
+    }
+    catch (error) {
+        res.status(500).send({ message: error.message })
+    }
+
+
+}
+
+
+
+
+
+module.exports = { createCategory, updateCategory, getSingleCategory, getAllCategories, deleteCategory, searchCategory }
