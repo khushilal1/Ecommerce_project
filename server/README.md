@@ -96,11 +96,41 @@ The server will start on the URL: `http://localhost:3003`
   ```
 
 
+
+
+
+
+
+
+
 - **Protected Route** (POST)
   ```
   URL: http://localhost:3003/api/protected
   Headers: { Authorization: <your-token> }
   ```
+
+
+#### Admin API (Admin Management)
+
+- **Registration** (POST)
+
+  ```
+
+  URL: http://localhost:3003/api/admin/register
+  Body: { name, email, password }
+  ```
+
+
+
+
+
+
+
+
+
+
+
+
 
 #### Category API
 

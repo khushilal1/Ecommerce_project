@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 // 2.create of Schema 
-const userSchema = new mongoose.Schema({
+const adminSchema = new mongoose.Schema({
 
     //for name
     name: {
@@ -29,28 +29,26 @@ const userSchema = new mongoose.Schema({
 
 
     },
+
     // //for the address
     address: {
         type: String,
         trim: true
     },
 
-    //for role as user or admin
-    iaAdmin: {
-        type: Number,
-        deafault: 0
 
 
-    },
+
     //for storing the image
     photo: {
         data: Buffer,
         contentType: String //jpeg,png
 
     },
-
-
-
+    isAdmin: {
+        type: String,
+        default: 1
+    },
 
     // //for checking the user is verifie or not
     isVerify: {
@@ -75,7 +73,8 @@ const userSchema = new mongoose.Schema({
 
     }
 )
+
 //creating the model
-const User = mongoose.model("Users", userSchema)
+const Admin = mongoose.model("Admin", adminSchema)
 //exporting the user model
-module.exports = { User }
+module.exports = { Admin }

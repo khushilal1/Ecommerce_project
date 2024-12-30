@@ -8,8 +8,8 @@ const { categoryRoute } = require("./routes/category.js");
 const { productRoute } = require("./routes/product.js");
 const cors = require('cors');
 const { orderRoute } = require("./routes/order.js");
-
-
+const { clientError, serverError } = require("./controllers/error.js");
+const { adminRoute } = require("./routes/admin.js");
 const app = express();
 const port = dev.app_port.serverPort
 
@@ -26,6 +26,12 @@ app.use(cors({
 }))
 //for user managemnet
 app.use("/api", userRoute)
+
+
+//for admin management
+app.use("/api/admin", adminRoute)
+
+
 //for category management
 app.use("/api", categoryRoute)
 //for product managemnet
@@ -35,34 +41,10 @@ app.use("/api", productRoute)
 app.use("/api", orderRoute)
 
 
-
-
-
-//checking the api  is wokring fine or notn
-app.get("/test", (req, res) => {
-    res.send("api is working fine")
-})
-
-
 //for the 404 as the client error
-app.use((err, req, res, next) => {
-    console.log(err.stack);
-    return res.status(500).send({
-        success: false,
-        message: err.message
-    })
-
-
-})
+app.use(clientError)
 //for the server error
-app.use((err, req, res, next) => {
-    console.log(err.stack);
-    return res.status(404).json({
-        success: false,
-        message: "Route not found"
-    })
-
-})
+app.use(serverError)
 //for the port
 
 app.listen(port, async () => {
