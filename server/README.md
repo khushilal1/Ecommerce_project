@@ -47,59 +47,48 @@ npm start
 
 The server will start on the URL: `http://localhost:3003`
 
-#### User API (User Management)
 
+
+
+
+#### User API (User Management)
 - **Registration** (POST)
 
   ```
-
   URL: http://localhost:3003/api/register
   Body: { name, email, password }
   ```
 
 - **Account Activation** (POST)
 
-  ```
-
-  URL: http://localhost:3003/api/account-activation
+  ```URL: http://localhost:3003/api/account-activation
   Body: { name, email, password }
   ```
 
 - **Login** (POST)
-
-  ```
-  URL: http://localhost:3003/api/login
+  ```URL: http://localhost:3003/api/login
   Body: { email, password }
   ```
 
 - **Forget Password** (POST)
-
   ```
   URL: http://localhost:3003/api/forget-password?email=example@example.com
   Body: { email }
   ```
 
 - **Reset Password** (POST)
-
   ```
   URL: http://localhost:3003/api/reset-password
   Body: { newPassword }
   ```
 
 - **Update The user profile** (PUT)
-
   ```
   URL: http://localhost:3003/api/update
   //the token must be used after the login
    Headers: { Authorization: <your-token> }
   Body: { name,passwor,address,photo }
   ```
-
-
-
-
-
-
 
 
 
@@ -112,13 +101,47 @@ The server will start on the URL: `http://localhost:3003`
 
 #### Admin API (Admin Management)
 
+
 - **Registration** (POST)
 
-  ```
-
-  URL: http://localhost:3003/api/admin/register
+  ```URL: http://localhost:3003/api/admin/register
   Body: { name, email, password }
   ```
+
+- **Account Activation** (POST)
+  ```URL: http://localhost:3003/api/admin/account-activation
+  Body: { name, email, password }
+  ```
+
+- **Login** (POST)
+  ```
+  URL: http://localhost:3003/api/admin/login
+  Body: { email, password }
+  ```
+
+- **Forget Password** (POST)
+  ```URL:http://localhost:3003/api/admin/forget-password
+  Body: { email }
+  ```
+
+- **Reset Password** (POST)
+
+  ```
+  URL: http://localhost:3003/api/admin/reset-password
+  Body: { newPassword }
+  ```
+
+- **Update The admin profile** (PUT)
+
+  ```
+  URL: http://localhost:3003/api/admin/update
+  //the token must be used after the login
+   Headers: { Authorization: <your-token> }
+  Body: { name,passwor,address,photo }
+  ```
+
+
+
 
 
 
@@ -252,35 +275,3 @@ Order management
 -backend: when the payment is successfull processed
 ----create an order Schema and Model
 ----store the order in the database
-
-## Frontend
-
-### Steps
-
-1. **Create the React App**
-
-2. **Pages and Routing**
-
-   - Register User
-   - Activate User
-   - Login User
-   - Protected Route for Authentication
-   - Manage Login Status with Redux Toolkit
-   - Store Login Data in Local Storage
-   - Protected Route with Server Response
-   - Render Navbar Conditionally
-   - Dynamic Dashboard for Users and Admins
-
-3. **Dashboards**
-
-   - Admin Dashboard
-   - User Dashboard
-
-4. **APIs**
-
-   - **Category API**
-     - Create, Read, Update, Delete
-   - **Product API**
-     - Create, Read, Update, Delete
-
-5. **Deploy**
