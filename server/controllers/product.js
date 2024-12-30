@@ -1,4 +1,5 @@
 const { Product } = require("../models/product");
+const { Category } = require("../models/category");
 const fs = require("fs")
 const slugify = require("slugify")
 const braintree = require("braintree");
@@ -25,38 +26,36 @@ const createProduct = async (req, res) => {
         const { name, description, price, quantity, shipping, category } = req.fields
         // console.log();
         const { photo } = req.files
-
         // console.log(photo);
 
+        //checking the required fields
         if (!name || !description || !price || !quantity || !category) {
             return res.status(404).json({ message: "name,description,price,quantity and category  of any product  are  required" })
         }
-        // checking the size of photo
+        //checking the category of product in database
+        const categoryData = await Category.findOne({ name: category })
+
+        console.log(categoryData._id)
+        //  checking the size of photo
         console.log(photo.size);
-        if (photo && photo.size > 2000000) {
+        if (photo && photo.size > 2) {
             return res.status(400).json({ message: "The size of photo cannot be more than 2 MB" })
 
         }
 
-        //creating the product ans storing in the database without photo
+        // //creating the product ans storing in the database without photo
         const newProduct = await Product({
-            name, slug: slugify(name), description, price, quantity, category, shipping
+            name, slug: slugify(name), description, price, quantity, category: categoryData._id, shipping
         })
 
 
-        //creating the product ans storing in the database with photo
-        if (photo) {
-            //stpring the data of photo as buffer
-            newProduct.photo.data = fs.readFileSync(photo.path)
-            //stromg the extension as photp content type
-            newProduct.photo.contentType = photo.type
-        }
+        // //creating the product ans storing in the database with photo
+   
 
-
-        //saving to the database
-        await newProduct.save()
-        // returing the product
-        return res.status(200).json({ message: "Product was created", newProduct: newProduct })
+        // //saving to the database
+        // await newProduct.save()
+        // // returing the product
+        // return res.status(200).json({ message: "Product was created", newProduct: newProduct })
     }
 
     catch (error) {

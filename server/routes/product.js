@@ -38,6 +38,9 @@ productRoute.get("/products-count", countProduct)
 //for having the product search
 productRoute.post("/products/search/:searchValue", isLoggedIn, searchProducts)
 
+
+
+
 //payment route
 //this is route which doesnot required any middle ware for showing the deatil or creating the token
 productRoute.get("/braintree/token", getBrainTreeToken)

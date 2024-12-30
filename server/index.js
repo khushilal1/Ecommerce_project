@@ -15,17 +15,19 @@ const port = dev.app_port.serverPort
 const cookieParser = require('cookie-parser');
 
 
-//for middleware
 
+
+//for middleware
 app.use(morgan("dev")) //for cheking the api calling method
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser());
 //for getting the user
+
 app.use(cors({
-    origin: "*", //both are the same as one is ip addresss and other are the local host
-    credentials: true
-}))
+    origin: ["http://localhost:3000", "http://127.0.0.1:3000"], // Add the specific domains
+    credentials: true // Allow credentials (cookies, headers)
+}));
 //for user managemnet
 app.use("/api", userRoute)
 
@@ -47,6 +49,7 @@ app.use(clientError)
 app.use(serverError)
 //for the port
 
+//server the 
 app.listen(port, async () => {
     console.log(chalk.blue(`server is running at http://localhost:${port}`));
     await connectDB()

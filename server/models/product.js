@@ -57,7 +57,7 @@ const productSchema = new mongoose.Schema({
 
     },
 
-    //refrencing to other model
+    //refrencing to other  category model-->for knowing which product is of which category
     category: {
         type: Schema.Types.ObjectId,
         ref: "Category",
@@ -74,7 +74,9 @@ const productSchema = new mongoose.Schema({
         default: new Date().toISOString()
     },
 
+
 },
+    { timestamps: true }
 
 )
 //creating the model

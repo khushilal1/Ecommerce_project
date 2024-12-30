@@ -40,7 +40,6 @@ const userSchema = new mongoose.Schema({
         type: Number,
         deafault: 0
 
-
     },
     //for storing the image
     photo: {
