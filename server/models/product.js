@@ -69,10 +69,7 @@ const productSchema = new mongoose.Schema({
         type: Date,
         default: new Date().toISOString()
     },
-    updateAt: {
-        type: Date,
-        default: new Date().toISOString()
-    },
+   
 
 
 },

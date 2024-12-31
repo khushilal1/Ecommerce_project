@@ -44,6 +44,6 @@ const orderSchema = new Schema({
 
 
 //creating the model
-const Order = mongoose.model("Order", orderSchema)
+const Order = new model("Order", orderSchema)
 //exporting the user model
 module.exports = { Order }

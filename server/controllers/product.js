@@ -24,7 +24,7 @@ const createProduct = async (req, res) => {
 
         //using the new package fomridable-express 
         const { name, description, price, quantity, shipping, category } = req.fields
-        // console.log();
+        console.log(req.files);
         const { photo } = req.files
         // console.log(photo);
 
@@ -34,28 +34,40 @@ const createProduct = async (req, res) => {
         }
         //checking the category of product in database
         const categoryData = await Category.findOne({ name: category })
+        //checking the category is available or ot
+        if (!categoryData) {
+            return res.status(404).json({ message: "The category with the name is not found" })
+        }
 
-        console.log(categoryData._id)
+        // console.log(categoryData._id)
         //  checking the size of photo
         console.log(photo.size);
-        if (photo && photo.size > 2) {
+        if (photo && photo.size > 2 * 1024 * 1024) {
             return res.status(400).json({ message: "The size of photo cannot be more than 2 MB" })
 
         }
 
-        // //creating the product ans storing in the database without photo
-        const newProduct = await Product({
+
+
+        // //creating the product and storing in the database without photo
+        const newProduct = await new Product({
             name, slug: slugify(name), description, price, quantity, category: categoryData._id, shipping
         })
 
 
         // //creating the product ans storing in the database with photo
-   
+
+        if (photo) {
+            //storing the data of phot as buffer
+            newProduct.photo.data = fs.readFileSync(photo.path)
+            //stromg the extension as photp content type
+            newProduct.photo.contentType = photo.type
+        }
 
         // //saving to the database
-        // await newProduct.save()
+        await newProduct.save()
         // // returing the product
-        // return res.status(200).json({ message: "Product was created", newProduct: newProduct })
+        return res.status(200).json({ message: "Product was created", newProduct: newProduct })
     }
 
     catch (error) {
@@ -65,8 +77,10 @@ const createProduct = async (req, res) => {
 
 }
 
-// all the product
 
+
+
+// all the product
 const getProducts = async (req, res) => {
 
 
@@ -93,6 +107,7 @@ const getProducts = async (req, res) => {
 
 
 }
+
 
 
 const getProductsSpecific = async (req, res) => {
@@ -135,7 +150,9 @@ const getSingleProducts = async (req, res) => {
 
         // )
         // console.log(singleProduct);
-
+        if (!singleProduct) {
+            return res.status(404).send({ message: "No product found with name" })
+        }
 
         return res.status(200).json({ message: "Single product was returned", singleProduct: singleProduct })
     }
@@ -283,6 +300,11 @@ const searchProducts = async (req, res) => {
             ]
         }).select("-photo")
 
+
+        //checking the products is available 
+        if (!searchProducts) {
+            return res.status(404).json({ message: "No product found with keyword" })
+        }
         return res.status(200).send({ message: "Searched Product was returned", searchedProducts: searchedProducts })
 
 
@@ -296,8 +318,54 @@ const searchProducts = async (req, res) => {
 
 
 
+//for filtering the product range
 
-//for creating token for the payment integration
+const filterProductPriceRange = async (req, res) => {
+
+    try {
+        //getting the value from query
+        const { minPrice, maxPrice } = req.query
+       
+        //cheking the min and max price available or not
+        if (!maxPrice || !minPrice) {
+            return res.status(404).json({ message: "maxPrice and minPrice is required." })
+        }
+
+        //getting the filtered product
+        const filteredProduct = await Product.find({
+
+            price: { $gte: Number(minPrice), $lte: Number(maxPrice) }  //gte->greater than and equal to ,lte->less than or equal to
+
+
+
+        }).select({ photo: 0, _id: 0, category: 0, createdAt: 0, updatedAt: 0 ,__v:0})
+        //checing if the product is available or not
+        if (filteredProduct.length < 1) {
+            return res.status(404).json({ message: "Product not found with given price" })
+        }
+        //returning the filtered product
+        return res.status(200).json({ message: "Filtered product was returned successfully", filteredProduct: filteredProduct })
+
+    }
+    catch (error) {
+        res.status(500).send({ message: error.message })
+    }
+
+
+}
+
+
+//
+
+
+
+
+
+
+
+
+
+//for creating token for the payment integration and pass to frontend
 
 const getBrainTreeToken = async (req, res) => {
 
@@ -309,7 +377,7 @@ const getBrainTreeToken = async (req, res) => {
         console.log(braintreeToken)
         //checking the  tokne is generated or not
         if (!braintreeToken) {
-            return res.status(401).send({ message: "token not generated" })
+            return res.status(401).send({ message: "Token not generated" })
         }
 
 
@@ -363,4 +431,4 @@ const processBraintreePayment = async (req, res) => {
 
 
 //exporting the module
-module.exports = { createProduct, getProducts, getSingleProducts, getPhotoProduct, deleteProduct, updateProduct, countProduct, getProductsSpecific, searchProducts, getBrainTreeToken, processBraintreePayment }
+module.exports = { createProduct, getProducts, getSingleProducts, getPhotoProduct, deleteProduct, updateProduct, countProduct, getProductsSpecific, searchProducts, getBrainTreeToken, processBraintreePayment, filterProductPriceRange }

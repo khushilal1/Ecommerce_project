@@ -31,5 +31,11 @@ categoryRoute.post("/categories/search/:searchValue", searchCategory)
 
 
 
+//for deleting the category ,there is need of logged and the user be admin
+categoryRoute.post("/categories/:categoryId", isLoggedIn, isAdmin, deleteCategory)
+
+
+
+
 
 module.exports = { categoryRoute }

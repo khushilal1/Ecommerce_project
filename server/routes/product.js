@@ -1,6 +1,6 @@
 const express = require('express');
 const { isLoggedIn, isAdmin } = require('../middlewares/auth');
-const { createProduct, getProducts, getSingleProducts, getPhotoProduct, deleteProduct, updateProduct, countProduct, getProductsSpecific, searchProducts, getBrainTreeToken ,processBraintreePayment} = require('../controllers/product');
+const { createProduct, getProducts, getSingleProducts, getPhotoProduct, deleteProduct, updateProduct, countProduct, getProductsSpecific, searchProducts, getBrainTreeToken, processBraintreePayment, filterProductPriceRange } = require('../controllers/product');
 const productRoute = express.Router()
 const formidableMiddleware = require("express-formidable")
 
@@ -11,8 +11,8 @@ productRoute.post("/products", isLoggedIn, isAdmin, formidableMiddleware(), crea
 
 
 
-//getting all the product need not be admin and loged in
-productRoute.get("/products", isLoggedIn, formidableMiddleware(), getProducts)
+//getting all the product need not be admin and loggedIn
+productRoute.get("/products", getProducts)
 
 
 
@@ -21,10 +21,9 @@ productRoute.get("/products", isLoggedIn, formidableMiddleware(), getProducts)
 productRoute.get("/products/query", isLoggedIn, getProductsSpecific)
 
 //getting the single product if the user is admin and loggedIn
-productRoute.get("/products/:slug", isLoggedIn, formidableMiddleware(), getSingleProducts)
-//for gettig the photo only
-
-productRoute.get("/products/photo/:productId", formidableMiddleware(), getPhotoProduct)
+productRoute.get("/products/:slug", getSingleProducts)
+//for gettig the photo only of the products,only loggedIn is required
+productRoute.get("/products/photo/:productId", isLoggedIn, getPhotoProduct)
 //for deleting the product as is loggedin and isAdmin is required
 productRoute.delete("/products/:productId", isLoggedIn, isAdmin, deleteProduct)
 
@@ -36,18 +35,24 @@ productRoute.get("/products-count", countProduct)
 
 
 //for having the product search
-productRoute.post("/products/search/:searchValue", isLoggedIn, searchProducts)
+productRoute.post("/products/search/:searchValue", searchProducts)
 
 
 
 
-//payment route
-//this is route which doesnot required any middle ware for showing the deatil or creating the token
-productRoute.get("/braintree/token", getBrainTreeToken)
+//for filterig the product on the basis of the price range
+productRoute.get("/products/filter/price-range", filterProductPriceRange)
+//
 
 
-//for processing the token
-productRoute.post("/braintree/payment", processBraintreePayment)
+
+
+
+
+
+
+
+
 
 
 
