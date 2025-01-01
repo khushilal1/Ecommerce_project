@@ -6,7 +6,7 @@ import { logout } from '../features/userSlice'
 
 const NavBar = () => {
   const data=useSelector((state)=>state.user.data)
-  const isAdmin= data?.userData?.isAdmin
+  const isAdmin= data.userData.isAdmin
   const dispatch=useDispatch()
   const navigate=useNavigate()
   const handleLogout=()=>{
