@@ -365,70 +365,7 @@ const filterProductPriceRange = async (req, res) => {
 
 
 
-//for creating token for the payment integration and pass to frontend
-
-const getBrainTreeToken = async (req, res) => {
-
-    try {
-
-        // console.log(gateway)
-        const braintreeToken = await gateway.clientToken.generate({})
-        //priting the token
-        console.log(braintreeToken)
-        //checking the  tokne is generated or not
-        if (!braintreeToken) {
-            return res.status(401).send({ message: "Token not generated" })
-        }
-
-
-
-        return res.status(200).send({ braintreeToken: braintreeToken })
-
-    }
-    catch (error) {
-        res.status(500).send({ message: error.message })
-    }
-
-
-}
-
-
-//for processing of the payment
-
-const processBraintreePayment = async (req, res) => {
-
-    try {
-        const { payment_method_nonce, amount } = req.body
-        // console.log(req.body)
-
-        const result = await gateway.transaction.sale({
-            amount: amount,
-            paymentMethodNonce: payment_method_nonce,
-            options: {
-                submitForSettlement: true
-            }
-        })
-        console.log(result)
-        //checking the transaction is successfull or not
-        if (!result) {
-            return res.status(401), send({ message: 'Transaction unsuccessfull' })
-        }
-
-        else {
-            return res.status(200).send({ message: "Transaction is Sucessfull" })
-
-        }
-
-
-    }
-    catch (error) {
-        res.status(500).send({ message: error.message })
-    }
-
-
-}
-
 
 
 //exporting the module
-module.exports = { createProduct, getProducts, getSingleProducts, getPhotoProduct, deleteProduct, updateProduct, countProduct, getProductsSpecific, searchProducts, getBrainTreeToken, processBraintreePayment, filterProductPriceRange }
+module.exports = { createProduct, getProducts, getSingleProducts, getPhotoProduct, deleteProduct, updateProduct, countProduct, getProductsSpecific, searchProducts, filterProductPriceRange }

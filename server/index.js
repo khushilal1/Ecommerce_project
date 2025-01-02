@@ -6,6 +6,7 @@ const { connectDB } = require("./config/db.js");
 const { userRoute } = require("./routes/user.js");
 const { categoryRoute } = require("./routes/category.js");
 const { productRoute } = require("./routes/product.js");
+const { paymentRoute } = require("./routes/payment.js");
 const cors = require('cors');
 const { orderRoute } = require("./routes/order.js");
 const { clientError, serverError } = require("./controllers/error.js");
@@ -38,7 +39,8 @@ app.use("/api/admin", adminRoute)
 app.use("/api", categoryRoute)
 //for product managemnet
 app.use("/api", productRoute)
-
+//for payment management
+app.use("/api/payment", paymentRoute)
 //for order management
 app.use("/api", orderRoute)
 
