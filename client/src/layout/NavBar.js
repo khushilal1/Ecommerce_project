@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { logout } from '../features/userSlice'
 
-
 const NavBar = () => {
   const data=useSelector((state)=>state.user.data)
   const isAdmin= data?.userData?.isAdmin
@@ -11,7 +10,6 @@ const NavBar = () => {
   const navigate=useNavigate()
   const handleLogout=()=>{
     dispatch(logout())
-    
     navigate("/login",{replace:true})
   }
   return (
@@ -21,6 +19,7 @@ const NavBar = () => {
         {!data.isLoggedIn &&(
           <>
             <NavLink className="nav_link" to="/register">Register</NavLink>
+            <NavLink className="nav_link" to="/adminregister">AdminRegister</NavLink>
             <NavLink className="nav_link" to="/login">Login</NavLink>
           </>
         )}
