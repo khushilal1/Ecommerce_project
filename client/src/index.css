@@ -264,3 +264,47 @@ button:hover {
   width: 100px;
   height: 100px;
 }
+
+
+.categories {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.categories h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.categories ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.categories ul li {
+  font-size: 1.2rem;
+  padding: 10px 15px;
+  margin: 8px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.categories ul li:hover {
+  background-color: #e0f7fa;
+  transform: translateY(-3px);
+}
+
+.categories ul li:active {
+  background-color: #b2ebf2;
+  transform: translateY(0);
+}
