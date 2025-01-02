@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import {jwtDecode} from 'jwt-decode'
 import {toast, ToastContainer } from 'react-toastify'
 import {accountActivation} from '../services/UserServices'
+import { adminAccountActivation } from '../services/AdminServices'
 
 const Activate = () => {
     const {jwtToken}=useParams()
@@ -25,7 +26,7 @@ const Activate = () => {
         e.preventDefault()
         try{
             console.log(token)
-            await accountActivation({token})
+            await adminAccountActivation({token})
             navigate("/login");
 
         } catch(error){
@@ -36,7 +37,7 @@ const Activate = () => {
     <div>
         <ToastContainer/>
         <div>
-            <h1>Hello {name}, Ready to Activate tour Account? </h1>
+            <h1>Hello Admin{name}, Ready to Activate tour Account? </h1>
             <button className='btn btn-primary' type='submit' onClick={handleSubmit}>Activate Account</button>
         </div> 
 

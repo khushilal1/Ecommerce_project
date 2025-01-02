@@ -51,7 +51,6 @@ const productSchema = new mongoose.Schema({
         type: Boolean,
 
     },
-  
     photo: {
         data: Buffer,
         contentType: String //jpeg,png
@@ -70,7 +69,7 @@ const productSchema = new mongoose.Schema({
         type: Date,
         default: new Date().toISOString()
     },
-
+   
 
 
 },

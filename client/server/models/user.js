@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema({
     },
 
     //for role as user or admin
-    isAdmin: {
+    iaAdmin: {
         type: Number,
         deafault: 0
 

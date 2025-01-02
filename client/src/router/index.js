@@ -1,6 +1,6 @@
 import React from 'react'
 import {BrowserRouter, Routes, Route} from "react-router-dom"
-import {Home, About, Register, Login, UserDashboard, AdminDashboard, Products, Category, OrderHistory, MyProfile} from '../pages'
+import {Home, About, Register, Login, UserDashboard, AdminDashboard, Products, Category, OrderHistory, MyProfile, AdminRegister} from '../pages'
 import NavBar from '../layout/NavBar'
 import Footer from '../layout/Footer'
 import Activate from '../components/Activate'
@@ -17,6 +17,7 @@ const Index = () => {
           <Route path="/about" element={<About/>} /> 
           <Route path="/register" element={<Register/>} /> 
           <Route path="/login" element={<Login/>} /> 
+          <Route path="/adminregister" element={<AdminRegister/>} /> 
           <Route path="/dashboard" element={<Protected/>} >
             <Route path="user" element={<UserDashboard/>} />
             <Route path="user/order_history" element={<OrderHistory/>} />
