@@ -20,9 +20,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 //for getting the user
 app.use(cors({
-    origin:"*", //both are the same as one is ip addresss and other are the local host
-    credentials: true
-}))
+    origin: ["http://localhost:3000", "http://127.0.0.1:3000"], // Add the specific domains
+    credentials: true // Allow credentials (cookies, headers)
+}));
 
 app.use("/api", userRoute)
 app.use("/api", categoryRoute)
