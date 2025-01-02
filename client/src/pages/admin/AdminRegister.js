@@ -1,9 +1,9 @@
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { registerUser } from '../../services/UserServices'; // Ensure the service is correctly implemented and imported
 import React, { useState } from 'react';
+import { registerAdmin } from '../../services/AdminServices';
 
-export const Register = () => {
+export const AdminRegister = () => {
   const [user, setUser] = useState({
     name: '',
     email: '',
@@ -32,7 +32,7 @@ export const Register = () => {
 
     try {
       console.log(user)
-      const response = await registerUser(user); // Pass user data to the service
+      const response = await registerAdmin(user); // Pass user data to the service
       toast.success(response.message || 'Registration successful');
       setUser({
         name: '',
@@ -47,7 +47,7 @@ export const Register = () => {
 
   return (
     <div className="container center">
-      <h1>User Registration</h1>
+      <h1>Admin Registration</h1>
       <ToastContainer />
       <div className="card">
         <form className="registration-form" onSubmit={handleSubmit}>

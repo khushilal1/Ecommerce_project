@@ -14,14 +14,17 @@ const Activate = () => {
         const {name}=jwtDecode(jwtToken)
         if(jwtToken){
             setName(name)
+            // console.log(jwtToken)
             setToken(jwtToken)
+            console.log(token)
             
         }
-    },[])
+    },[jwtToken])
 
     const handleSubmit= async(e)=>{
         e.preventDefault()
         try{
+            console.log(token)
             await accountActivation({token})
             navigate("/login");
 
