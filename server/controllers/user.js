@@ -102,18 +102,18 @@ const activateAccount = async (req, res) => {
 
     try {
         //checking the token is available
-       // console.log(req.headers.authorization);
+       console.log(req.headers.authorization);
 
-        // if (!req.headers.authorization) {
-        //     return res.status(401).json({ error: "No token found" })
-        // }
+        if (!req.headers.authorization) {
+            return res.status(401).json({ error: "No token found" })
+        }
 
 
-        // const token = req.headers.authorization
-        // //getting the token from req.body
-        // console.log(token);
+        const token = req.headers.authorization
+        //getting the token from req.body
+        console.log(token);
 
-        const { token } = req.body
+        // const { token } = req.body
 
         // // //verifying the token
         const decodedData = await tokenVerify(token, res)
@@ -434,6 +434,7 @@ const loadProtected = async (req, res) => {
 
 
 }
+
 
 
 module.exports = { userRegister, activateAccount, loginUser, forgetPassword, resetPassword, updateUser, loadProtected }

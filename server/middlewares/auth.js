@@ -31,7 +31,6 @@ const isLoggedIn = (req, res, next) => {
 }
 
 //cheking the user is admin or not
-
 const isAdmin = async (req, res, next) => {
 
     try {

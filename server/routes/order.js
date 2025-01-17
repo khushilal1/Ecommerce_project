@@ -9,8 +9,9 @@ const orderRoute = Router()
 orderRoute.get("/orders", isLoggedIn,getAllOrders)
 
 
+
 //create the order
-orderRoute.post("/orders",createOrders)
+orderRoute.post("/orders",isLoggedIn,createOrders)
 
 
 

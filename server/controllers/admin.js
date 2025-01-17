@@ -15,23 +15,26 @@ const adminRegister = async (req, res) => {
 
   try {
     //getting the data from body
-    const { name, email, password, address } = req.body
+    const { name, email, password, address, secretKey } = req.body
     console.log(req.body);
-    //userData
 
+    // Validate the admin secret key
+    if (!secretKey || secretKey !== dev.adminSecretKey) {
+      return res.status(400).json({ error: 'Provide valid secret key for admin registration' });
+    }
     // //cheking the use is availabel in databases or not
     const existingAdmin = await Admin.findOne({ email: email })
     // console.log(existingUser);
 
 
-    // )
-    // // //checking the user is existing the send the user is already is available
+    //   // )
+    //   // // //checking the user is existing the send the user is already is available
 
     if (existingAdmin) {
       return res.status(409).json({ message: "Admin already registered." })
     }
 
-    // //securing the password as in hash form
+    //   // //securing the password as in hash form
     const hashPassword = await getHashPassword(password)
     // console.log(hashPassword);
 
@@ -47,27 +50,27 @@ const adminRegister = async (req, res) => {
       email, // Recipient's email
       subject: "Activate Your Account", // Email subject
       html: `
-              <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-                <h2 style="color: #2a9df4;">Welcome, ${name}!</h2>
-                
-                <p>Thank you for signing up. To activate your account, please click the button below:</p>
-                
-                <p>
-                  <a 
-                    href="${dev.app_port.clientUrl}/auth/activate/${token}" 
-                    style="background-color: #2a9df4; color: white; text-decoration: none; padding: 10px 15px; border-radius: 5px; display: inline-block; margin-top: 10px;">
-                    Activate Your Account
-                  </a>
-                </p>
-                
-                <p><strong>Note:</strong> This activation link will expire in 10 minutes. If the link has expired, you will need to request a new activation email.</p>
-                
-                <p>If you did not create this account, please ignore this email or contact our support team immediately.</p>
-                
-                <p>Best regards,</p>
-                <p style="font-weight: bold;">The ${dev.app_port.authEmail} Team</p>
-              </div>
-            `, // HTML body
+                <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                  <h2 style="color: #2a9df4;">Welcome, ${name}!</h2>
+
+                  <p>Thank you for signing up. To activate your account, please click the button below:</p>
+
+                  <p>
+                    <a 
+                      href="${dev.app_port.clientUrl}/auth/activate/${token}" 
+                      style="background-color: #2a9df4; color: white; text-decoration: none; padding: 10px 15px; border-radius: 5px; display: inline-block; margin-top: 10px;">
+                      Activate Your Account
+                    </a>
+                  </p>
+
+                  <p><strong>Note:</strong> This activation link will expire in 10 minutes. If the link has expired, you will need to request a new activation email.</p>
+
+                  <p>If you did not create this account, please ignore this email or contact our support team immediately.</p>
+
+                  <p>Best regards,</p>
+                  <p style="font-weight: bold;">The ${dev.app_port.authEmail} Team</p>
+                </div>
+              `, // HTML body
     };
 
 

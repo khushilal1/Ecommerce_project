@@ -42,18 +42,5 @@ productRoute.post("/products/search/:searchValue", searchProducts)
 
 //for filterig the product on the basis of the price range
 productRoute.get("/products/filter/price-range", filterProductPriceRange)
-//
-
-
-
-
-
-
-
-
-
-
-
-
 
 module.exports = { productRoute }

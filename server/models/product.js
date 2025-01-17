@@ -51,13 +51,13 @@ const productSchema = new mongoose.Schema({
         type: Boolean,
 
     },
-  
+
     photo: {
         data: Buffer,
         contentType: String //jpeg,png
 
     },
-
+   
     //refrencing to other  category model-->for knowing which product is of which category
     category: {
         type: Schema.Types.ObjectId,

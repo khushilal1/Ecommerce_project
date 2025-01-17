@@ -24,4 +24,5 @@ paymentRoute.post("/braintree/process-payment", isLoggedIn, processBraintreePaym
 //for making the report of the saved data about the payment
 paymentRoute.get("/braintree/report-generate",isLoggedIn, reportGenerate)
 
+
 module.exports = { paymentRoute }

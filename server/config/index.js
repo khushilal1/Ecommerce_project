@@ -22,7 +22,8 @@ const dev = {
         braintreeMerchantId: String(process.env.BRAINTREE_MERCHANT_ID),
         braintreePrivateKey: String(process.env.BRAINTREE_PRIVATE_KEY),
         braintreePublicKey: String(process.env.BRAINTREE_PUBLIC_KEY)
-    }
+    },
+    adminSecretKey: String(process.env.ADMIN_SECRET_KEY)
 
 }
 

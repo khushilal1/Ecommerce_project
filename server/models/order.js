@@ -1,49 +1,44 @@
-const { Schema, model } = require("mongoose")
 
-//This is that model which keep the detail about  product user  detail. Such that which user has created the order in which product
-const orderSchema = new Schema({
+const { Schema, model } = require("mongoose");
 
-    //STORING THE MULTIPLE ORDER OF MULTIPLE PROFUCT
-    products: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Product'
-    }],
+// Schema for Order
+const orderSchema = new Schema(
+  {
+    // Storing multiple products with quantity
+    products: [
+      {
+        product: { type: Schema.Types.ObjectId, ref: "Product" },
+        quantity: { type: Number, required: true },
+        amount: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
 
-    payment: {},
-    //the user are reffered and the order also keep the tracked of the user and product
+    // Payment details
+    payment: {
+      transactionId: { type: String },
+      amount: { type: Number },
+      status: { type: String, enum: ["Pending", "Completed", "Failed"], default: "Pending" },
+      method: { type: String, enum: ["Credit Card", "PayPal", "COD"] },
+    },
 
-    buyer: {
-        type: Schema.Types.ObjectId,
-        ref: "User"
-    }
+    // Tracking the buyer
+    buyer: { type: Schema.Types.ObjectId, ref: "User", required: true },
 
-    ,
+    // Order status
     status: {
-        type: String,
-        default: "Not processed",
-        enum: ['Not processed',
-            "Processing", "Shipped", "Delivered", "Cancelled"
-        ]
-
+      type: String,
+      default: "Not processed",
+      enum: ["Not processed", "Processing", "Shipped", "Delivered", "Cancelled"],
     },
-    createdAt: {
-        type: Date,
-        default: new Date().toISOString()
-    },
-    updateAt: {
-        type: Date,
-        default: new Date().toISOString()
-    },
-}
+  },
+  { timestamps: true } // Automatically adds createdAt and updatedAt
+);
 
-    , { timestamps: true }
+// Creating the model
+const Order = model("Order", orderSchema);
 
-
- 
-)
-
-
-//creating the model
-const Order = new model("Order", orderSchema)
-//exporting the user model
-module.exports = { Order }
+// Exporting the model
+module.exports = { Order };

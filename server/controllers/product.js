@@ -51,7 +51,7 @@ const createProduct = async (req, res) => {
 
         // //creating the product and storing in the database without photo
         const newProduct = await new Product({
-            name, slug: slugify(name), description, price, quantity, category: categoryData._id, shipping
+            name, slug: slugify(name), description, price, quantity, category: categoryData._id, shipping,
         })
 
 
@@ -71,7 +71,7 @@ const createProduct = async (req, res) => {
     }
 
     catch (error) {
-        res.status(500).send({ message: error.message })
+        res.status(500).send({ message: error })
     }
 
 
@@ -325,7 +325,7 @@ const filterProductPriceRange = async (req, res) => {
     try {
         //getting the value from query
         const { minPrice, maxPrice } = req.query
-       
+
         //cheking the min and max price available or not
         if (!maxPrice || !minPrice) {
             return res.status(404).json({ message: "maxPrice and minPrice is required." })
@@ -338,10 +338,10 @@ const filterProductPriceRange = async (req, res) => {
 
 
 
-        }).select({ photo: 0, _id: 0, category: 0, createdAt: 0, updatedAt: 0 ,__v:0})
+        }).select({ photo: 0, _id: 0, category: 0, createdAt: 0, updatedAt: 0, __v: 0 })
         //checing if the product is available or not
         if (filteredProduct.length < 1) {
-            return res.status(404).json({ message: "Product not found with given price" })
+            return res.status(404).json({ message: "Product not found with given range of  price" })
         }
         //returning the filtered product
         return res.status(200).json({ message: "Filtered product was returned successfully", filteredProduct: filteredProduct })
@@ -355,7 +355,7 @@ const filterProductPriceRange = async (req, res) => {
 }
 
 
-//
+
 
 
 
