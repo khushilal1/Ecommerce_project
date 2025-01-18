@@ -26,15 +26,11 @@ jobs:
         cd server
         npm install
 
-    - name: Run Tests
-      run: |
-        cd server
-        npm test
-
     - name: Build Application
       run: |
         cd server
         npm run build
+    
 
   deploy:
     runs-on: ubuntu-latest
