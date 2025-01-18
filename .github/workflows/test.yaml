@@ -35,7 +35,10 @@ jobs:
         cd server
         npm install rimraf@latest glob@latest formidable@latest
         npm audit fix --force
+        rm -rf node_modules
+        npm install
         npm run build
+
     # - name: Run the tests
     #   # run: npm test
 
