@@ -33,10 +33,11 @@ jobs:
     - name: Install and Build in Server Folder
       run: |
         cd server
-        npm install
+        npm install rimraf@latest glob@latest formidable@latest
+        npm audit fix --force
         npm run build
     # - name: Run the tests
     #   # run: npm test
 
-    - name: Build
-      run: npm run build
+    # - name: Build
+    #   run: npm run build
