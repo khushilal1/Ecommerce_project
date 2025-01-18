@@ -30,7 +30,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-   - name: Install and Build in Server Folder
+    - name: Install and Build in Server Folder
       run: |
         cd server
         npm install
