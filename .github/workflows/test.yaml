@@ -25,10 +25,12 @@ jobs:
       run: |
         cd server
         npm install
+        npm cache clean
 
     - name: Build Application
       run: |
         cd server
+        npm cache clean
         npm run build
     
 
