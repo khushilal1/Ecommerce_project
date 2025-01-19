@@ -29,6 +29,7 @@ jobs:
     - name: Build Application
       run: |
         cd server
+        npm install --save-dev webpack webpack-cli
         npm run build
     
 
